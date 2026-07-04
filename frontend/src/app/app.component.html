@@ -1,0 +1,55 @@
+<div class="page">
+  <header class="banner">
+    <h1>TRANSFORMERS<span class="accent">-V1</span></h1>
+    <p class="tagline">"Autobots, transform and roll out!"</p>
+  </header>
+
+  <section class="roster">
+    <h2>Autobot Roster</h2>
+    <div class="bot-cards">
+      <div class="bot-card" *ngFor="let bot of bots">
+        <h3>{{ bot.name }}</h3>
+        <ul>
+          <li *ngFor="let pair of bot.conversions">{{ pair[0] }} &rarr; {{ pair[1] }}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="console">
+    <h2>Transformation Console</h2>
+
+    <div class="field">
+      <label for="content">Input content</label>
+      <textarea id="content" rows="10" [(ngModel)]="content"></textarea>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="from">From</label>
+        <select id="from" [(ngModel)]="fromFormat">
+          <option *ngFor="let fmt of formats" [value]="fmt">{{ fmt }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="to">To</label>
+        <select id="to" [(ngModel)]="toFormat">
+          <option *ngFor="let fmt of formats" [value]="fmt">{{ fmt }}</option>
+        </select>
+      </div>
+
+      <button class="roll-out-btn" (click)="rollOut()" [disabled]="loading">
+        {{ loading ? 'Transforming...' : 'Roll Out!' }}
+      </button>
+    </div>
+
+    <p class="status success" *ngIf="botUsed">Rolled out {{ botUsed }}!</p>
+    <p class="status error" *ngIf="error">{{ error }}</p>
+
+    <div class="field" *ngIf="result">
+      <label>Result</label>
+      <pre class="result">{{ result }}</pre>
+    </div>
+  </section>
+</div>
