@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .registry import NoAutobotAvailable, OptimusPrime
@@ -53,3 +56,8 @@ def transform(request: TransformRequest) -> TransformResponse:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     return TransformResponse(bot_name=bot.name, result=result)
+
+
+_frontend_dist = Path(__file__).resolve().parent / "static"
+if _frontend_dist.is_dir():
+    app.mount("/", StaticFiles(directory=_frontend_dist, html=True), name="frontend")

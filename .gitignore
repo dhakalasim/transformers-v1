@@ -6,3 +6,4 @@ build/
 dist/
 .venv/
 venv/
+transformers_v1/static/
